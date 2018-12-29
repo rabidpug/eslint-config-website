@@ -36,25 +36,25 @@ const RulesGroupHeader = styled.div`
   align-items: center;
   min-height: 24px;
   padding-bottom: 15px;
-  
+
   svg {
     transform: rotate(-90deg);
   }
 `;
 
 const RulesGroup = styled.div`
-  
+
   ${props => css`
 
     ${props.isOpen && css`
       margin-bottom: 30px;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
-      
+
       ${RulesGroupHeader} {
-      
+
         svg {
           transform: rotate(90deg);
         }
@@ -115,6 +115,7 @@ export class Sidebar extends React.Component {
     isNodeJSAndCommonJSRulesDropDownOpen: false,
     isStylisticIssuesRulesDropDownOpen: false,
     isECMAScript6RulesDropDownOpen: false,
+    triggerOnSearchChangeTimeout: null,
   };
 
   handleSearchKeyPress = (e) => {
@@ -124,9 +125,9 @@ export class Sidebar extends React.Component {
   };
 
   handleSearchChange = (e) => {
-    if (e.currentTarget.value.length === 0) {
-      this.props.onSearchEnterPress(e.currentTarget.value);
-    }
+    if (this.state.triggerOnSearchChangeTimeout) clearTimeout(this.state.triggerOnSearchChangeTimeout)
+    const triggerOnSearchChangeTimeout = setTimeout(this.props.onSearchEnterPress, 600, e.currentTarget.value);
+    this.setState({triggerOnSearchChangeTimeout})
   };
 
   toggleDropDown = (name) => {

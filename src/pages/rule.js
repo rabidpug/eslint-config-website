@@ -37,8 +37,8 @@ export class RulePage extends React.Component {
         };
       }
 
-      const rulesMatchedByName = fast.filter(prevState.rules, ((rule) => rule.name.includes(prevState.searchingString)));
-      const rulesMatchedByShortDescription = fast.filter(prevState.rules, ((rule) => rule.shortDescription.includes(prevState.searchingString)));
+      const rulesMatchedByName = fast.filter(prevState.rules, ((rule) => rule.name.toLowerCase().includes(prevState.searchingString)));
+      const rulesMatchedByShortDescription = fast.filter(prevState.rules, ((rule) => rule.shortDescription.toLowerCase().includes(prevState.searchingString)));
 
       const filteredRules = [...rulesMatchedByName, ...rulesMatchedByShortDescription];
 
@@ -52,7 +52,7 @@ export class RulePage extends React.Component {
   };
 
   changeSearchingString = (value) => {
-    this.setState({ searchingString: value }, this.filterRules);
+    this.setState({ searchingString: value.toLowerCase() }, this.filterRules);
   };
 
   toggleAllRulesInCategory = (category, value) => {
